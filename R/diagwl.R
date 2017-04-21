@@ -1,10 +1,10 @@
 #Diagrama de Walter y Lieth
-diagwl <- function(dat, est="", alt=NA, per="", margen=c(4,4,5,4),
+diagwl <- function(dat, est="", alt=NA, per="",
     mlab="", pcol="#005ac8", tcol="#e81800", pfcol="#79e6e8",
-    sfcol="#09a0d1", shem=FALSE, p3line=FALSE, ...) {
-  old.par <- par(no.readonly = TRUE)
-  on.exit(par(old.par))
-  par(mar=margen, pty="s", las=1, new=FALSE)
+    sfcol="#09a0d1", shem=FALSE, p3line=FALSE, fontsize, ...) {
+  # old.par <- par(no.readonly = TRUE)
+  # on.exit(par(old.par))
+  # par(mar=margen, pty="s", las=1, new=FALSE)
   nr <- nrow(dat) #no. de filas de datos mensuales
   if(nrow(dat) < 4) { cat("Debe haber 4 filas de datos mensuales\n"); break; }
   #etiquetas de los meses
@@ -54,15 +54,15 @@ diagwl <- function(dat, est="", alt=NA, per="", margen=c(4,4,5,4),
   if(lmin==-1.5) lmin=0
   axis(2,((lmin/10):(ymax/10))*10,labels=labT,col.axis=tcol)
   axis(4,((lmin/10):(ymax/10))*10,labels=labP,col.axis=pcol)
-  mtext("C",2,col=tcol,las=1,line=3,adj=0,at=55)
-  mtext("mm",4,col=pcol,las=1,line=3,adj=1,at=55)
+  mtext("C",2,col=tcol,las=1,line=3,adj=0,at=55, cex = fontsize)
+  mtext("mm",4,col=pcol,las=1,line=3,adj=1,at=55, cex = fontsize)
   abline(0,0)
   abline(50,0)
   #rótulos:
-  if(is.na(alt)) mtext(est,line=2,adj=0)
-  else mtext(paste(est," (",alt," m)",sep=""),line=2,adj=0)
-  mtext(per,line=1,adj=0)
-  mtext(paste(round(mean(tm*10))/10,"C        ",round(sum(p))," mm",sep=""),line=1,adj=1)
+  if(is.na(alt)) mtext(est,line=2,adj=0, cex = fontsize)
+  else mtext(paste(est," (",alt," m)",sep=""),line=2,adj=0, cex = fontsize)
+  mtext(per,line=1,adj=0, cex = fontsize)
+  mtext(paste(round(mean(tm*10))/10,"C        ",round(sum(p))," mm",sep=""),line=1,adj=1, cex = fontsize)
   x <- 0:13-0.5
   p2 <- c(p[12],p[1:12],p[1])
   if(p3line) { #línea adicional de precipitación a escala 1:3
@@ -180,14 +180,14 @@ diagwl <- function(dat, est="", alt=NA, per="", margen=c(4,4,5,4),
   lines(x,c(tm[12],tm[1:12],tm[1]),col=tcol,lwd=2)
   #media de las máximas del mes más cálido
   mtext(formatC(max(as.matrix(dat[2,])),digits=1,format="f"),2,las=1,
-    line=2,at=35)
+    line=2,at=35, cex = fontsize)
   #media de las mínimas del mes más frío
   mtext(formatC(min(as.matrix(dat[3,])),digits=1,format="f"),2,las=1,
-    line=2,at=15)
+    line=2,at=15, cex = fontsize)
   #marcar límites de los meses:
   for(i in 0:13) segments(i,0,i,-1.5)
   #rótulos meses:
-  mtext(mlab,1,las=1,line=0.5,adj=0.5,at=x[2:13])
+  mtext(mlab,1,las=1,line=0.5,adj=0.5,at=x[2:13], cex = fontsize)
   #reset old.par (restablecemos parámetros gráficos anteriores):
-  invisible()
+  # invisible()
 }
